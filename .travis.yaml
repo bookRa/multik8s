@@ -1,0 +1,21 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t omar/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true omar/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t omar/multi-client ./client
+  - docker build -t omar/multi-nginx ./nginx
+  - docker build -t omar/multi-server ./server
+  - docker build -t omar/multi-worker ./worker
+  # Login to dockerCLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push to hub.docker
+  - docker push omar/multi-client
+  - docker push omar/multi-nginx
+  - docker push omar/multi-server
+  - docker push omar/multi-worker
