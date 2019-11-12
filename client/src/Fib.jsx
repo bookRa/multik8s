@@ -50,13 +50,16 @@ class Fib extends Component {
     renderAllValuesSofar(){
         console.log("rendering all values")
         const entries = []
-        for (let key in this.state.values){
-            entries.push(
-                <div key={key}>
-                    For index {key} I calculated {this.state.values[key]}
-                </div>
-            )
+        if(Object.keys(this.state.values.length).length > 0){
 
+            for (let key of this.state.seenIndexes){
+                entries.push(
+                    <div key={key}>
+                        For index {key} I calculated {this.state.values[key]}
+                    </div>
+                )
+    
+            }
         }
         return entries
     }
