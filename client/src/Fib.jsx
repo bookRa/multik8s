@@ -38,21 +38,17 @@ class Fib extends Component {
     }
 
     renderSeenIndexes(){
+        console.log(typeof this.state.seenIndexes)
             
-        if(typeof this.state.seenIndexes == Array){
-
             return this.state.seenIndexes.map(({number})=> number).join(', ')
-        }else{
-            return []
-        }
     }
 
     renderAllValuesSofar(){
         console.log("rendering all values")
         const entries = []
-        if(Object.keys(this.state.values.length).length > 0){
+        if(this.state.values !== {}){
 
-            for (let key of this.state.seenIndexes){
+            for (let key in this.state.values){
                 entries.push(
                     <div key={key}>
                         For index {key} I calculated {this.state.values[key]}
